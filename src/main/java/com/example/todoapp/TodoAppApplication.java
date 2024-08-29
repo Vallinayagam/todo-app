@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -27,7 +26,13 @@ class AppTierController {
     @Autowired
     private TodoService todoService;
 
-    @GetMapping("/api")
+
+    @GetMapping("/health")
+    public String health() {
+        return "OK";
+    }
+
+    @GetMapping("/todos")
     public List<TodoEntity> getApi() {
         return todoService.getAll();
     }
