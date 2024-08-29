@@ -70,5 +70,5 @@ stages:
             inputs:
               azureSubscription: $(azureSubscription)
               appType: webAppLinux
-              appName: $(webAppName)
+              appName: todo-app111
               package: '$(Pipeline.Workspace)/drop/**/target/*.?(war|jar)'
