@@ -35,11 +35,9 @@ stages:
     #   vmImage: $(vmImageName)
 
     steps:
-    - task: Maven@3
-      displayName: 'Maven Package'
-      inputs:
-        mavenPomFile: 'pom.xml'
-        jdkVersionOption: '1.17'
+    - script: |
+        mvn clean package
+      displayName: 'Run a multi-line script'
 
     - task: CopyFiles@2
       displayName: 'Copy Files to artifact staging directory'
