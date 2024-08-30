@@ -6,7 +6,7 @@
 trigger:
 - main
 
-# pool: Default
+pool: amazon
 
 
 variables:
@@ -21,7 +21,7 @@ variables:
   environmentName: 'dev'
 
   # # Agent VM image name
-  vmImageName: 'ubuntu-latest'
+  # vmImageName: 'ubuntu-latest'
 
   # ppol
 
@@ -31,8 +31,8 @@ stages:
   jobs:
   - job: MavenPackageAndPublishArtifacts
     displayName: Maven Package and Publish Artifacts
-    pool:
-      vmImage: $(vmImageName)
+    # pool:
+    #   vmImage: $(vmImageName)
 
     steps:
     - task: Maven@4
@@ -51,24 +51,24 @@ stages:
     - upload: $(Build.ArtifactStagingDirectory)
       artifact: drop
 
-- stage: Deploy
-  displayName: Deploy stage
-  dependsOn: Build
-  condition: succeeded()
-  jobs:
-  - deployment: DeployLinuxWebApp
-    displayName: Deploy Linux Web App
-    environment: $(environmentName)
-    pool:
-      vmImage: $(vmImageName)
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: AzureWebApp@1
-            displayName: 'Azure Web App Deploy: '
-            inputs:
-              azureSubscription: $(azureSubscription)
-              appType: webAppLinux
-              appName: todo-app111
-              package: '$(Pipeline.Workspace)/drop/**/target/*.?(war|jar)'
+# - stage: Deploy
+#   displayName: Deploy stage
+#   dependsOn: Build
+#   condition: succeeded()
+#   jobs:
+#   - deployment: DeployLinuxWebApp
+#     displayName: Deploy Linux Web App
+#     environment: $(environmentName)
+#     pool:
+#       vmImage: $(vmImageName)
+#     strategy:
+#       runOnce:
+#         deploy:
+#           steps:
+#           - task: AzureWebApp@1
+#             displayName: 'Azure Web App Deploy: '
+#             inputs:
+#               azureSubscription: $(azureSubscription)
+#               appType: webAppLinux
+#               appName: todo-app111
+#               package: '$(Pipeline.Workspace)/drop/**/target/*.?(war|jar)'
