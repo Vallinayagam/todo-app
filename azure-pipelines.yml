@@ -52,6 +52,16 @@ stages:
         aws s3 cp ./target/*.jar s3://valli-jenkins-s3-bucket/$(Build.BuildNumber)/
       displayName: copy to s3
 
+    - script: |
+        aws ssm put-parameter \
+          --name "todo-app-build-number" \
+          --value $(Build.BuildNumber) \
+          --type "String" \
+          --overwrite
+      displayName: Update SSM Parameter
+
+
+
 # - stage: Deploy
 #   displayName: Deploy stage
 #   dependsOn: Build
