@@ -49,7 +49,7 @@ stages:
     - script: |
         echo $(Build.ArtifactStagingDirectory) 
         cd $(Build.ArtifactStagingDirectory)
-        aws s3 cp ./target/*.jar s3://valli-jenkins-s3-bucket
+        aws s3 cp ./target/*.jar s3://valli-jenkins-s3-bucket/$(Build.BuildNumber)
       displayName: copy to s3
 
 # - stage: Deploy
